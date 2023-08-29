@@ -10,7 +10,7 @@ function App() {
   const [wind,setWind]=useState("");
   const [main,setMain] = useState({});
   const [pin,setPin] = useState("");
-  const appId="c11d7c86322520773720de40f27ef5a0";
+  const appId=process.env.REACT_APP_WEATHER_API_KEY;
   useEffect(() => {
       if(pin){
           getData();   
