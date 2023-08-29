@@ -1,56 +1,62 @@
 
 import './App.css';
-import Pet from './Pet';
-import {useEffect, useState} from "react";
-const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
-function App() {
-  const [animal, setAnimal] = useState("");
-  const[location,setLocation]=useState("");
-  const [breed, setBreed] = useState([]);
-  const [pets,setPets]=useState([]);
 
+import {useEffect, useState} from "react";
+
+function App() {
+
+  const [weather,setWeather] = useState([]);
+  const [name,setName]=useState("");
+  const [wind,setWind]=useState("");
+  const [main,setMain] = useState({});
+  const [pin,setPin] = useState("");
+  const appId="c11d7c86322520773720de40f27ef5a0";
   useEffect(() => {
-        getData();   
+      if(pin){
+          getData();   
+      }else{
+
+      }
       },[]); // eslint-disable-line react-hooks/exhaustive-deps
       
       async function getData(){ 
-        const res = await fetch(`http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`);
+        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${pin},in&units=metric&appid=${appId}`);
         const json = await res.json();
         console.log(json);
-        
-        setPets(json.pets);
-       
+        setName(json.name);
+        setWeather(json.weather);
+        setWind(json.wind);
+        setMain(json.main);
      }
   
-   
-  return (
-    <div>
-     <label>Animal</label>
-    <select id="animal" value={animal} onChange={(e) => setAnimal(e.target.value)}>
-    <option value="">Select an animal</option>
-        {ANIMALS.map((animal) => (
-          <option key={animal} value={animal}>
-            {animal}
-          </option>
-        ))}
-      </select>
-   
-      <label>Breed</label>
-      <select>
-      <option value="">Select breed</option>
-        {breed.map((breedItem) => (
-          <option key={breedItem}>{breedItem}</option>
-        ))}
-      </select>
-      {pets.map((pet)=>(
-        <Pet 
-          name={pet.name}
-        />
-      ))}
-      
-      
-    </div>
-  );
-}
-
-export default App;
+     return (
+      <div>
+      <label htmlFor="">INDIA</label>
+      <label htmlFor="input">ENTER ZIP CODE</label>
+      <input value={pin} onChange = {
+        (e) => setPin(e.target.value) 
+      }></input>
+      <button onClick={() => getData()}>Submit</button>
+        <h1>{name}</h1>
+        <div className="weather-container">
+          <h2>Weather:</h2>
+          {weather.map((weatherItem, index) => (
+            <div key={index}>
+              <p>{weatherItem.main}</p>
+              <p>{weatherItem.description}</p>
+            </div>
+          ))}
+        </div>
+        <div className="wind-container">
+          <h2>Wind:</h2>
+          <p>{wind.deg}</p>
+        </div>
+        <div className="temperature-container">
+          <h2>Temperature:</h2>
+          <p>{main.temp} °C</p>
+        </div>
+      </div>
+    );
+  }
+  
+  export default App;
