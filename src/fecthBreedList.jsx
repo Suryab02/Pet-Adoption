@@ -3,7 +3,7 @@ const fecthBreedList = async ({ queryKey }) => {
 
   if (!animal) return [];
   const apiRes = await fetch(
-    `http://pets-v2.dev-apis.com/breeds?animal=${animal}`
+    `https://pets-v2.dev-apis.com/breeds?animal=${animal}`
   );
 
   if (!apiRes.ok) {

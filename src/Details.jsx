@@ -29,19 +29,17 @@ const Details = () => {
         </h2>
         <button onClick={() => setShowModal(true)}>Adopt {pet.name}</button>;
         <p>{pet.description}</p>
-        {
-          showModal ? (
-            <Modal>
-              <div>
-                <h1>Would you like to adopt {pet.name}?</h1>
-                <div className="buttons">
-                  <button>Yes</button>
-                  <button onClick={() => setShowModal(false)}>No</button>
-                </div>
+        {showModal ? (
+          <Modal>
+            <div>
+              <h1>Would you like to adopt {pet.name}?</h1>
+              <div className="buttons">
+                <button>Yes</button>
+                <button onClick={() => setShowModal(false)}>No</button>
               </div>
-            </Modal>
-          ) : null // you have to remove this semi-colon, my auto-formatter adds it back if I delete it
-        }
+            </div>
+          </Modal>
+        ) : null}
       </div>
     </div>
   );
